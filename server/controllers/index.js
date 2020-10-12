@@ -11,12 +11,6 @@ const defaultData = {
   bedsOwned: 0,
 };
 
-const defaultDog = {
-  name: 'unknown',
-  age: 0,
-  breed: 'unknown',
-};
-
 // object for us to keep track of the last Cat we made and dynamically update it sometimes
 let lastAdded = new Cat(defaultData);
 
