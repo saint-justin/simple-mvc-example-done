@@ -11,6 +11,12 @@ const defaultData = {
   bedsOwned: 0,
 };
 
+const defaultDog = {
+  name: 'unknown',
+  age: 0,
+  breed: 'unknown',
+};
+
 // object for us to keep track of the last Cat we made and dynamically update it sometimes
 let lastAdded = new Cat(defaultData);
 
@@ -25,6 +31,10 @@ const hostIndex = (req, res) => {
 
 // function to find all cats on request.
 const readAllCats = (req, res, callback) => {
+  Cat.find(callback).lean();
+};
+
+const readAllDogs = (req, res, callback) => {
   Cat.find(callback).lean();
 };
 
@@ -73,7 +83,16 @@ const hostPage3 = (req, res) => {
 
 // function to handle requests to the page4 page
 const hostPage4 = (req, res) => {
-  res.render('page4');
+  const callback = (err, docs) => {
+    if (err) {
+      return res.status(500).json({ err }); // if error, return it
+    }
+
+    // return success
+    return res.render('page1', { cats: docs });
+  };
+
+  readAllDogs(req, res, callback);
 };
 
 // function to handle get request to send the name
